@@ -1,0 +1,50 @@
+service: financeMetricsS3DynamoDb
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - s3:GetObject
+      Resource: "arn:aws:s3:::fin-transactions/*"
+    - Effect: Allow
+      Action: 
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:eu-west-1:320856942995:table/transactions"
+
+functions:
+  loadToDynamoDb:
+    handler: handler.loadToDynamoDb
+    events:
+      - s3:
+          bucket: fin-transactions
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: 2018/
+            - suffix: .csv
+
+# resources:
+#   Resources:
+#     S3BucketFinTransactions:
+#       Type: AWS::S3::Bucket
+#       Properties:
+#         BucketName: fin-transactions
+#     LoadToDynamoDbLambdaPermissionTransactionsS3:
+#       Type: "AWS::Lambda::Permission"
+#       Properties:
+#         FunctionName:
+#           "Fn::GetAtt":
+#             - LoadToDynamoDbLambdaFunction
+#             - Arn
+#         Principal: "s3.amazonaws.com"
+#         Action: "lambda:InvokeFunction"
+#         SourceAccount:
+#             Ref: AWS::AccountId
+#         SourceArn: "arn:aws:s3:::fin-transactions"
+
+
+
+

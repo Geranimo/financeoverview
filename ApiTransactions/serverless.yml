@@ -1,0 +1,20 @@
+service: ApiTransactions
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:Query
+      Resource: "arn:aws:dynamodb:eu-west-1:320856942995:table/transactions"
+
+functions:
+  GetTransactions:
+    handler: handler.getTransactions
+    events:
+      - http:
+          path: transactions/{month}
+          method: get
