@@ -13,7 +13,7 @@ export class TransactionsService {
 
   MOCK_TRANSACTIONS: Transactions[] =  [
     {
-        "Payment": "+500,00",
+        "Payment": "500.00",
         "Date": "2018-02-01",
         "UserIban": "NL32RABO0147457521",
         "SequenceNumber": 4377,
@@ -22,8 +22,8 @@ export class TransactionsService {
         "NameCounterParty": "S. KANDASAMY SEKAR"
     },
     {
-        "Payment": "-23,00",
-        "Date": "2018-02-01",
+        "Payment": "23.00",
+        "Date": "2018-02-02",
         "UserIban": "NL32RABO0147457521",
         "SequenceNumber": 4378,
         "BalanceAfter": "+925,55",
@@ -31,8 +31,8 @@ export class TransactionsService {
         "NameCounterParty": "Nv Pwn Waterleidingbedrijf Noord Holland"
     },
     {
-        "Payment": "-39,62",
-        "Date": "2018-02-01",
+        "Payment": "39.62",
+        "Date": "2018-02-03",
         "UserIban": "NL32RABO0147457521",
         "SequenceNumber": 4379,
         "BalanceAfter": "+885,93",

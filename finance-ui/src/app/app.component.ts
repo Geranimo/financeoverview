@@ -10,32 +10,23 @@ import { ChartsModule } from 'ng2-charts';
 })
 export class AppComponent {
   title = 'Where did the money go??';
-  transactions: Transactions[];
-  chart = [];
-  amount: string[] = [];
-  date: string[] = [];
-  
+  chartData = [];
+  chartLabels = [];
   constructor(private transactionService: TransactionsService) { 
   }
 
   ngOnInit() {
     this.transactionService.getTransactions().subscribe(tns => {
-      this.amount =  tns.map(t => (t.Payment));
-      this.date = tns.map(t=> t.Date);
-      console.log("Amounts => " + JSON.stringify(this.amount));
+      this.chartData = [
+        { data: tns.map(t => (Number(t.Payment))), label: "Account A" }
+      ];
+      this.chartLabels = tns.map(t=> t.Date.toLocaleLowerCase());
     });
-    console.log(JSON.stringify(this.transactions));
   }
 
   chartOptions = {
     responsive: true
   };
-
-  chartData = [
-    { data: this.amount, label: 'Account A' }
-  ];
-
-  chartLabels = this.date;
 
   onChartClick(event) {
     console.log(event);
