@@ -1,12 +1,18 @@
 'use strict';
 const AWS = require('aws-sdk');
+const moment = require('moment')
 const ddb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.getTransactions = (event, context, callback) => {
+  console.log("Received event" + JSON.stringify(event));
+  var month = event.queryStringParameters.month;
+  var year = event.queryStringParameters.year;
+  var startDate = moment().startOf('month').month(month).year(year).format('YYYY-MM-DD')
+  var endDate = moment().endOf('month').month(month).year(year).format('YYYY-MM-DD')
 
   var params = {
       TableName: "transactions",
-      FilterExpression: "#date >= :dateVal",
+      FilterExpression: "#date >= :startDateVal and #date <=:endDateVal ",
       KeyConditionExpression: "#iban = :ibanVal and #sqnumber > :sqnVal",
       ExpressionAttributeNames:{
         "#date":"Date", 
@@ -15,9 +21,9 @@ module.exports.getTransactions = (event, context, callback) => {
       },
       ExpressionAttributeValues: {
           ":sqnVal" : 100,
-          ":dateVal" :"2018-02-01",
-          ":ibanVal" :"NL32RABO0147457521"
-
+          ":startDateVal" :startDate,
+          ":endDateVal" :endDate,
+          ":ibanVal" : event.pathParameters.iban
       }
   };
 

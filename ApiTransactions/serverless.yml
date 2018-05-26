@@ -16,5 +16,10 @@ functions:
     handler: handler.getTransactions
     events:
       - http:
-          path: transactions/{month}
+          path: transactions/iban/{iban}
           method: get
+          request:
+            parameters:
+              querystrings: 
+                - month: true
+                - year: true
