@@ -4,7 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
-import {TransactionsService} from './transactions.service';
+import { TransactionsService } from './transactions.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +16,12 @@ import {TransactionsService} from './transactions.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot()
+  ],
+  exports: [
   ],
   providers: [TransactionsService],
   bootstrap: [AppComponent]

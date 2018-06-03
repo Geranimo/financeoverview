@@ -1,29 +1,29 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-     {{ title }}
+    {{ title }}
   </h1>
 
-  <h2>List of Transactions</h2>
-  <ul class="transac">
-    <li *ngFor="let transaction of transactions">
-      <span class="badge"> {{transaction.UserIban}} {{transaction.Payment}} {{transaction.Date}} {{transaction.NameCounterParty}} {{transaction.Description}} </span>
-    </li>
-  </ul>
+  <h2>Account summary for month of march</h2>
 
-  <div style="width: 40%;">
-    <canvas
-        baseChart
-        [chartType]="'line'"
-        [datasets]="chartData"
-        [labels]="chartLabels"
-        [options]="chartOptions"
-        [legend]="true"
-        (chartClick)="onChartClick($event)">
-    </canvas>
+  <div class="monthSummary">
+    <p>Total Amount Credited: {{amountCredited}} euro</p>
+    <p>Toatal Amount Debited: {{amountDebited}} euro</p>
+    <p>Final Balance : {{finalBalance}} euro</p>
   </div>
 
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-
-
-
+  <div id="tnsList" class="container-fluid">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let tns of transactions" style="text-align: left">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Choose A Tag</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" *ngFor="let purpose of paymentPurposes" 
+            (click)="updateTagsOnTransactionOfSimilarCounterParty(tns, purpose)">{{purpose}}</button>
+          </div>
+        </div>
+        {{ tns.NameCounterParty }} {{ tns.Description}}
+        <button class="btn btn-primary" (click)="removeTag(tns)">{{ tns.tag }}</button>
+      </li>
+    </ul>
+  </div>

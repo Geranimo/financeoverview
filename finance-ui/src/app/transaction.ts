@@ -1,5 +1,5 @@
 
-export class Transactions {
+export interface Transaction {
     Payment : string;
     Date: string;
     UserIban: string;
@@ -7,4 +7,5 @@ export class Transactions {
     BalanceAfter: string;
     Description: string;
     NameCounterParty: string;
+    tag: string;
 }

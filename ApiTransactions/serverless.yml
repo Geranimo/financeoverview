@@ -9,11 +9,12 @@ provider:
     - Effect: Allow
       Action: 
         - dynamodb:Query
+        - dynamodb:UpdateItem
       Resource: "arn:aws:dynamodb:eu-west-1:320856942995:table/transactions"
 
 functions:
   GetTransactions:
-    handler: handler.getTransactions
+    handler: getTransactions.handler
     events:
       - http:
           path: transactions/iban/{iban}
@@ -23,3 +24,9 @@ functions:
               querystrings: 
                 - month: true
                 - year: true
+  TagTransactions:
+    handler: tagTransactions.handler
+    events:
+      - http:
+          path: transactions/tag/
+          method: put

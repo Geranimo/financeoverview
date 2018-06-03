@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const moment = require('moment')
 const ddb = new AWS.DynamoDB.DocumentClient();
 
-module.exports.getTransactions = (event, context, callback) => {
+module.exports.handler = (event, context, callback) => {
   console.log("Received event" + JSON.stringify(event));
   var month = event.queryStringParameters.month;
   var year = event.queryStringParameters.year;
