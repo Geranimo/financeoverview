@@ -1,0 +1,97 @@
+<div id="tnsList" class="container">
+  <div class="alert alert-primary" role="alert">
+    <h1 class="display-3 text-center">
+      {{ title }}
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="row">
+        <span class="input-group-text" id="basic-fromDate">From</span>
+        <input name="dp" [(ngModel)]="fromDate" ngbDatepicker #fromD="ngbDatepicker" (click)="fromD.toggle()">
+        <span class="input-group-text" id="basic-endDate">End</span>
+        <input name="endD" [(ngModel)]="endDate" ngbDatepicker #endD="ngbDatepicker" (click)="endD.toggle()">
+        <button type="button" class="btn btn-primary" (click)="getTransactionsForSelectedDates()">List Payments</button>
+        <button type="button" class="btn btn-primary" (click)="toggleView()">Table/Chart</button>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">BudgetTypes</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="budgetType" (ngModelChange)="calculateBudgetByType($event)"
+          ng-options="p as p for p in paymentPurposes track by p">
+          <option [ngValue]="undefined" selected>select a type</option>
+          <option *ngFor="let purpose of paymentPurposes" [ngValue]="purpose">{{purpose}}</option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-primary" for="inputGroupSelect01" (click)="cleanUpTheBudgetType()">clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 border border-primary rounded">
+      <div *ngIf="tableOrChart" id="tableView">
+        <table class="transactionListTable table-hover">
+          <thead>
+            <tr class="text-left">
+              <th scope="col" style="width: 20%">Date</th>
+              <th scope="col" style="width: 30%">Description</th>
+              <th scope="col" style="width: 30%">PartyInfo</th>
+              <th scope="col" style="width: 15%">BudgetType</th>
+              <th scope="col" style="width: 5%">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-left" *ngFor="let tns of transactions | filterByType : 'tag' : budgetType">
+              <td> {{tns.Date}}</td>
+              <td>{{tns.Description}}</td>
+              <td> {{tns.NameCounterParty}}</td>
+              <td>{{tns.tag}}</td>
+              <td>{{tns.Payment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!tableOrChart" id="chartView">
+        <div style="display: block">
+          <canvas baseChart width="400" height="400"
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 border border-primary rounded">
+      <div>
+        <span>
+          <p class="lead">Total Amount Credited</p>
+        </span>
+        <span>
+          <h3 class="display-1 text-center">{{amountCredited}} €</h3>
+        </span>
+      </div>
+      <div>
+        <span>
+          <p class="lead">Total Amount Debited</p>
+        </span>
+        <span>
+          <h3 class="display-1 text-center">{{amountDebited}} €</h3>
+        </span>
+      </div>
+      <div>
+        <span>
+          <p class="lead">Final Balance</p>
+        </span>
+        <span>
+          <h3 class="display-1 text-center">{{finalBalance}} €</h3>
+        </span>
+      </div>
+    </div>
+  </div>
