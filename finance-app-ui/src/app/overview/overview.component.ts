@@ -21,10 +21,9 @@ export class OverviewComponent implements OnInit {
   budgetType: string;
   transactions: Array<Transaction> = [];
   selectedTransaction: Transaction;
-  tableOrChart: boolean = false;
+  tableOrChart: boolean = true;
   paymentPurposes: Array<String> = PaymentTags;
 
-  // Doughnut
   public doughnutChartLabels: Array<string> = [];
   public doughnutChartData: Array<number> = [];
   public doughnutChartType: string = 'doughnut';
@@ -32,7 +31,6 @@ export class OverviewComponent implements OnInit {
   constructor(private transactionService: TransactionsService) { }
 
   ngOnInit() {
-    this.getChartData();
   }
 
   getChartData(tns: Transaction[]) {
@@ -43,7 +41,7 @@ export class OverviewComponent implements OnInit {
         .map(tns => parseInt(tns.Payment))
         .reduce(this.getSum, 0);
       this.doughnutChartData.push(sumOfTheType);
-      this.doughnutChartLabels.push(PaymentTags[i])
+      this.doughnutChartLabels.push(PaymentTags[i].toString())
     }
   }
 
