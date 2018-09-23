@@ -1,8 +1,0 @@
-{
-    "/": {
-      "target": "https://xxxxxxxxxxxx.execute-api.eu-west-1.amazonaws.com/dev",
-      "secure": false,
-      "changeOrigin": true,
-      "logLevel": "debug"
-    }
-  }
