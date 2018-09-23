@@ -1,0 +1,62 @@
+<h1>
+  Organise the payment types</h1>
+
+<div class="container" id="taggingTransactions">
+  <div class="row">
+    <div class="col-8 border border-primary rounded">
+      <table class="transactionListTable table-hover">
+        <thead>
+          <tr class="text-left">
+            <th scope="col" style="width: 30%">Description</th>
+            <th scope="col" style="width: 30%">PartyInfo</th>
+            <th scope="col" style="width: 15%">BudgetType</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-left" *ngFor="let tns of transactionWithoutTag" (click)="onSelect(tns)">
+            <td>{{tns.Description}}</td>
+            <td> {{tns.NameCounterParty}}</td>
+            <td>{{tns.tag}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col border border-primary rounded">
+      <div id="selectedTns" *ngIf="selectedTransaction">
+      <div>
+        <span>
+          <p class="lead font-weight-bold">PaymentInfo</p>
+        </span>
+        <span>
+          <p class="display-6 text-center">{{selectedTransaction.NameCounterParty}} €</p>
+        </span>
+      </div>
+      <div>
+        <span>
+          <p class="lead font-weight-bold">Description</p>
+        </span>
+        <span>
+          <p class="display-6 text-center">{{selectedTransaction.Description}} €</p>
+        </span>
+      </div>
+      <div>
+          <span>
+              <p class="lead font-weight-bold">Select a Type</p>
+            </span>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">BudgetTypes</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedType" (ngModelChange)="calculateBudgetByType($event)">
+            <option [ngValue]="undefined" selected>select a type</option>
+            <option *ngFor="let purpose of exsistingPaymentTypes" [ngValue]="purpose">{{purpose}}</option>
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-primary" for="inputGroupSelect01" (click)="updateTransactionWithType(selectedType)">Update</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

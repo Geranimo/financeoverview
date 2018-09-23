@@ -1,0 +1,8 @@
+{
+    "/": {
+      "target": "https://api.sashcodes.com/v1/",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
